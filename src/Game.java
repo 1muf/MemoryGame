@@ -1,103 +1,106 @@
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class Game
-{
-	private String[] cards; // Array to hold card values
-	private boolean[] flipped; // Array to track which cards are face-up
-	private int score; // Player's score
-	private int moves; // Number of moves made
-	private int totalPairs; // Total pairs in the game
+public class Game {
+    private List<Card> cards;
+    private boolean[] matchedCards; // Array to track if a card has been matched
+    private int score; // Score variable to track the total score
+    private int moves; // Variable to track the number of moves made
 
-	public Game()
-	{
-		initializeGame();
-	}
+    public Game() {
+        initializeGame(); // Call the initialization method when the game is created
+    }
 
-	private void initializeGame()
-	{
-		cards = new String[16]; // 4x4 grid
-		flipped = new boolean[16]; // All cards start face down
-		score = 0;
-		moves = 0;
-		totalPairs = 8; // Assuming 8 pairs of cards
+    private void initializeGame() {
+        cards = new ArrayList<>();
+        matchedCards = new boolean[6]; // Reset the matched cards array
+        score = 0;
+        moves = 0; // Initialize moves
 
-		// Initialize the card values (you can customize this)
-		String[] values = { "A", "A", "B", "B", "C", "C", "D", "D", "E", "E",
-				"F", "F", "G", "G", "H", "H" };
+        // Add cards with the same type for matching pairs
+        cards.add(new SpellCard("Spell 1"));
+        cards.add(new SpellCard("Spell 2"));
+        cards.add(new TroopCard("Troop 1"));
+        cards.add(new TroopCard("Troop 2"));
+        cards.add(new BuildingCard("Building 1"));
+        cards.add(new BuildingCard("Building 2"));
 
-		// Shuffle the card values
-		shuffleCards(values);
-	}
+        Collections.shuffle(cards); // Shuffle the cards
 
-	private void shuffleCards(String[] values)
-	{
-		Random rand = new Random();
-		for (int i = 0; i < values.length; i++)
-		{
-			int randomIndex = rand.nextInt(values.length);
-			String temp = values[i];
-			values[i] = values[randomIndex];
-			values[randomIndex] = temp;
-		}
-		cards = values; // Assign shuffled values to cards
-	}
+        // Ensure all cards are face-down at the start of the game
+        for (Card card : cards) {
+            if (card.isFaceUp()) {
+                card.flip(); // Set each card to face-down
+            }
+        }
+    }
 
-	public boolean flipCard(int index)
-	{
-		if (index >= 0 && index < cards.length)
-		{
-			flipped[index] = !flipped[index]; // Toggle the flipped state
-			return true; // Successfully flipped
-		}
-		return false; // Invalid index
-	}
+    public Card getCard(int index) {
+        return cards.get(index); // Return the card at the specified index
+    }
 
-	public String getCardValue(int index)
-	{
-		if (index >= 0 && index < cards.length)
-		{
-			return flipped[index] ? cards[index] : "Card"; // Show card value if
-															// flipped, else
-															// "Card"
-		}
-		return null; // Invalid index
-	}
+    public void flipCard(int index) {
+        if (!matchedCards[index]) { // Only flip cards that are not already matched
+            cards.get(index).flip(); // Flip the card at the specified index
+        }
+    }
 
-	public boolean isCardMatched(int index)
-	{
-		if (index >= 0 && index < cards.length)
-		{
-			return flipped[index] && cards[index].equals("Matched"); // Check if
-																		// the
-																		// card
-																		// is
-																		// matched
-		}
-		return false; // Invalid index
-	}
+    public int getCardCount() {
+        return cards.size(); // Return the total number of cards
+    }
 
-	public void incrementScore()
-	{
-		score++; // Increase score
-	}
+    public boolean isCardMatched(int index) {
+        return matchedCards[index]; // Return whether the card at the given index is matched
+    }
 
-	public int getScore()
-	{
-		return score; // Return current score
-	}
+    public void matchCards(int firstCardIndex, int secondCardIndex) {
+        // Compare the types of the two cards and mark them as matched if they are the same type
+        Card firstCard = cards.get(firstCardIndex);
+        Card secondCard = cards.get(secondCardIndex);
 
-	public void incrementMoves()
-	{
-		moves++; // Increase moves
-	}
+        if (firstCard.getType().equals(secondCard.getType())) {
+            matchedCards[firstCardIndex] = true;
+            matchedCards[secondCardIndex] = true;
 
-	public int getMoves()
-	{
-		return moves; // Return current number of moves
-	}
+            // Award points based on the type of card
+            if (firstCard instanceof SpellCard) {
+                score += 1;
+            } else if (firstCard instanceof TroopCard) {
+                score += 2;
+            } else if (firstCard instanceof BuildingCard) {
+                score += 3;
+            }
 
-	public void resetGame()
-	{
-		initializeGame(); // Reinitialize game state
-	}
+            moves++; // Increment the moves after a match is made
+        }
+    }
+
+    public int getScore() {
+        return score; // Return the current score
+    }
+
+    public int getMoves() {
+        return moves; // Return the current move count
+    }
+
+    public void resetCard(int index) {
+        // Reset the card to face down
+        cards.get(index).flip();
+    }
+
+    // Check if the game is over (all cards have been matched)
+    public boolean isGameOver() {
+        for (boolean matched : matchedCards) {
+            if (!matched) { // If any card is not matched
+                return false;
+            }
+        }
+        return true; // All cards are matched
+    }
+
+    public void resetGame() {
+        initializeGame(); // Reinitialize game state
+        moves = 0; // Reset moves to 0 when the game is reset
+    }
 }

@@ -1,6 +1,6 @@
 public class MemoryGame {
     public static void main(String[] args) {
-        // Initialize and start the game
+        // Create and show the game view
         GameView gameView = new GameView();
     }
 }
