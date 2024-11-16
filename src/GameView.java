@@ -98,8 +98,13 @@ public class GameView extends JFrame {
 
             if (firstCard.getType().equals(secondCard.getType())) {
                 game.matchCards(firstCardIndex, secondCardIndex);
+                // Update button text to "Solved"
+                cardButtons[firstCardIndex / 3][firstCardIndex % 3].setText("Solved");
+                cardButtons[secondCardIndex / 3][secondCardIndex % 3].setText("Solved");
+
                 cardButtons[firstCardIndex / 3][firstCardIndex % 3].setEnabled(false);
                 cardButtons[secondCardIndex / 3][secondCardIndex % 3].setEnabled(false);
+
                 firstCardIndex = -1;
                 secondCardIndex = -1;
 
