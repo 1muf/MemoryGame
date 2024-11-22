@@ -14,7 +14,7 @@ public class Game {
 
     private void initializeGame() {
         cards = new ArrayList<>();
-        matchedCards = new boolean[6]; // Reset the matched cards array
+        matchedCards = new boolean[16]; // Updated to 16 for the new card types
         score = 0;
         moves = 0; // Initialize moves
 
@@ -25,6 +25,16 @@ public class Game {
         cards.add(new TroopCard("Troop 2"));
         cards.add(new BuildingCard("Building 1"));
         cards.add(new BuildingCard("Building 2"));
+        cards.add(new HeroCard("Hero 1"));
+        cards.add(new HeroCard("Hero 2"));
+        cards.add(new PetCard("Pet 1"));
+        cards.add(new PetCard("Pet 2"));
+        cards.add(new TrapCard("Trap 1"));
+        cards.add(new TrapCard("Trap 2"));
+        cards.add(new ResourceCard("Resource 1"));
+        cards.add(new ResourceCard("Resource 2"));
+        cards.add(new EventCard("Event 1"));
+        cards.add(new EventCard("Event 2"));
 
         Collections.shuffle(cards); // Shuffle the cards
 
@@ -70,6 +80,16 @@ public class Game {
                 score += 2;
             } else if (firstCard instanceof BuildingCard) {
                 score += 3;
+            } else if (firstCard instanceof HeroCard) {
+                score += 4; // Points for Hero cards
+            } else if (firstCard instanceof PetCard) {
+                score += 1; // Points for Pet cards
+            } else if (firstCard instanceof TrapCard) {
+                score += 5; // Points for Trap cards
+            } else if (firstCard instanceof ResourceCard) {
+                score += 2; // Points for Resource cards
+            } else if (firstCard instanceof EventCard) {
+                score += 3; // Points for Event cards
             }
 
             moves++; // Increment the moves after a match is made

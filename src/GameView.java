@@ -16,7 +16,7 @@ public class GameView extends JFrame {
         game = new Game();
 
         setTitle("Memory Game");
-        setSize(500, 400);
+        setSize(600, 600); // Adjust the size for the 4x4 grid
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -48,14 +48,14 @@ public class GameView extends JFrame {
         bottomPanel.add(showSolutionButton, BorderLayout.EAST);
         add(bottomPanel, BorderLayout.SOUTH);
 
-        // Card grid in the center
+        // Card grid in the center (4x4 grid)
         JPanel cardPanel = new JPanel();
-        cardPanel.setLayout(new GridLayout(2, 3));
-        cardButtons = new JButton[2][3];
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 3; j++) {
+        cardPanel.setLayout(new GridLayout(4, 4)); // 4x4 grid
+        cardButtons = new JButton[4][4]; // 4x4 grid of buttons
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
                 cardButtons[i][j] = new JButton("Card");
-                final int index = i * 3 + j;
+                final int index = i * 4 + j; // Calculate index for 4x4 grid
                 cardButtons[i][j].addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -80,7 +80,7 @@ public class GameView extends JFrame {
 
         game.flipCard(index);
         Card card = game.getCard(index);
-        JButton button = cardButtons[index / 3][index % 3];
+        JButton button = cardButtons[index / 4][index % 4]; // Updated indexing for 4x4 grid
         if (card.isFaceUp()) {
             button.setBackground(card.getColor());
             button.setText(card.getValue());
@@ -99,11 +99,11 @@ public class GameView extends JFrame {
             if (firstCard.getType().equals(secondCard.getType())) {
                 game.matchCards(firstCardIndex, secondCardIndex);
                 // Update button text to "Solved"
-                cardButtons[firstCardIndex / 3][firstCardIndex % 3].setText("Solved");
-                cardButtons[secondCardIndex / 3][secondCardIndex % 3].setText("Solved");
+                cardButtons[firstCardIndex / 4][firstCardIndex % 4].setText("Solved");
+                cardButtons[secondCardIndex / 4][secondCardIndex % 4].setText("Solved");
 
-                cardButtons[firstCardIndex / 3][firstCardIndex % 3].setEnabled(false);
-                cardButtons[secondCardIndex / 3][secondCardIndex % 3].setEnabled(false);
+                cardButtons[firstCardIndex / 4][firstCardIndex % 4].setEnabled(false);
+                cardButtons[secondCardIndex / 4][secondCardIndex % 4].setEnabled(false);
 
                 firstCardIndex = -1;
                 secondCardIndex = -1;
@@ -131,10 +131,10 @@ public class GameView extends JFrame {
     private void resetCardSelection() {
         game.resetCard(firstCardIndex);
         game.resetCard(secondCardIndex);
-        cardButtons[firstCardIndex / 3][firstCardIndex % 3].setBackground(null);
-        cardButtons[firstCardIndex / 3][firstCardIndex % 3].setText("Card");
-        cardButtons[secondCardIndex / 3][secondCardIndex % 3].setBackground(null);
-        cardButtons[secondCardIndex / 3][secondCardIndex % 3].setText("Card");
+        cardButtons[firstCardIndex / 4][firstCardIndex % 4].setBackground(null);
+        cardButtons[firstCardIndex / 4][firstCardIndex % 4].setText("Card");
+        cardButtons[secondCardIndex / 4][secondCardIndex % 4].setBackground(null);
+        cardButtons[secondCardIndex / 4][secondCardIndex % 4].setText("Card");
         firstCardIndex = -1;
         secondCardIndex = -1;
     }
@@ -144,8 +144,8 @@ public class GameView extends JFrame {
         moves = 0;
         movesLabel.setText("Moves: " + moves);
         scoreLabel.setText("Score: 0");
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < 4; i++) { // Reset for 4x4 grid
+            for (int j = 0; j < 4; j++) {
                 cardButtons[i][j].setEnabled(true);
                 cardButtons[i][j].setBackground(null);
                 cardButtons[i][j].setText("Card");
@@ -158,8 +158,8 @@ public class GameView extends JFrame {
     private void showSolution() {
         for (int i = 0; i < game.getCardCount(); i++) {
             Card card = game.getCard(i);
-            cardButtons[i / 3][i % 3].setText(card.getValue());
-            cardButtons[i / 3][i % 3].setBackground(card.getColor());
+            cardButtons[i / 4][i % 4].setText(card.getValue());
+            cardButtons[i / 4][i % 4].setBackground(card.getColor());
         }
     }
 }

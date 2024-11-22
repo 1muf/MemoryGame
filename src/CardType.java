@@ -1,7 +1,12 @@
 public enum CardType {
     SPELL(2),   
     TROOP(3),   
-    BUILDING(4);
+    BUILDING(4),
+    HERO(5),      // Hero card
+    PET(1),       // Pet card
+    TRAP(6),      // Trap card
+    RESOURCE(2),  // Resource card
+    EVENT(3);     // Event card
 
     private final int points;
 
@@ -23,6 +28,16 @@ public enum CardType {
                 return "Troop Card";
             case BUILDING:
                 return "Building Card";
+            case HERO:
+                return "Hero Card";
+            case PET:
+                return "Pet Card";
+            case TRAP:
+                return "Trap Card";
+            case RESOURCE:
+                return "Resource Card";
+            case EVENT:
+                return "Event Card";
             default:
                 return super.toString(); // Default case if needed
         }
