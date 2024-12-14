@@ -78,7 +78,7 @@ public class MemoryGameTest
 		// Initial moves should be 0
 		int initialMoves = game.getMoves();
 
-		// Loop through all pairs of cards (using indices 0-5 for 6 cards)
+		// Loop through all pairs of cards (using indices 0-15 for 16 cards)
 		for (int i = 0; i < game.getCardCount(); i++)
 		{
 			for (int j = i + 1; j < game.getCardCount(); j++)
@@ -93,13 +93,12 @@ public class MemoryGameTest
 			}
 		}
 
-		// Check if the moves have increased correctly after flipping all card
-		// pairs
+		// After all pairs have been flipped, the number of moves should be the
+		// number of pairs (120)
 		int finalMoves = game.getMoves();
-		// We expect the number of moves to be equal to the number of matches (3
-		// pairs)
-		assertEquals(3, finalMoves,
-				"Moves should be 3 after flipping all pairs");
+		// Expect 120 moves (since we're matching all pairs of 16 cards)
+		assertEquals(8, finalMoves,
+				"Moves should be 8 after flipping all pairs");
 	}
 
 	// Test Case 6: Test Game Over Condition
