@@ -1,3 +1,25 @@
+
+/**
+ * Lead Author(s):
+ * 
+ * @author Tyler Wang
+ * 
+ *         Other contributors:
+ *         None
+ * 
+ *         Version/date: 8.0 / 12/13/2024
+ * 
+ *         Responsibilities of class:
+ *         This class contains unit tests for the Memory Game. It includes test
+ *         cases to verify
+ *         the functionality of various game components such as card creation,
+ *         flipping cards,
+ *         matching cards by type, scoring system, moves counter, game over
+ *         condition, and
+ *         restart game functionality. The tests ensure the correct behavior of
+ *         the game's logic
+ *         and interactions between different components.
+ */
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

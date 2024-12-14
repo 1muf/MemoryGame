@@ -1,3 +1,25 @@
+
+/**
+ * Lead Author(s):
+ * 
+ * @author Tyler Wang
+ * 
+ *         Other contributors:
+ *         None
+ * 
+ *         Version/date: 8.0 / 12/13/2024
+ * 
+ *         Responsibilities of class:
+ *         This class handles the user interface for the Memory Game. It creates
+ *         and manages
+ *         the graphical components of the game, including the display of the
+ *         card grid,
+ *         score, and number of moves. It interacts with the Game model to flip
+ *         cards, check
+ *         for matches, update the score, and manage game state transitions. It
+ *         also provides
+ *         functionality for restarting the game and displaying the solution.
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
